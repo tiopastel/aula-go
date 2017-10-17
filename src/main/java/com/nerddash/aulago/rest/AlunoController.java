@@ -1,11 +1,11 @@
 package com.nerddash.aulago.rest;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 import com.nerddash.aulago.dao.AlunoDao;
 import com.nerddash.aulago.model.Aluno;
 import com.nerddash.aulago.model.Nivel;
-import com.nerddash.aulago.model.Pessoa.Sexo;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
@@ -16,9 +16,9 @@ public class AlunoController {
 	
 	
 	private final Result result;
-	private Aluno aluno;
-	private AlunoDao alunoDao;
-
+	private Aluno alunoInvalido;
+	private EntityManager em;
+	private AlunoDao dao;
 	/**
 	 * @deprecated CDI eyes only
 	 */
@@ -27,24 +27,26 @@ public class AlunoController {
 	}
 	
 	@Inject
-	public AlunoController(Result result, AlunoDao alunoDao) {
+	public AlunoController(Result result, AlunoDao dao) {
 		this.result = result;
-		this.alunoDao = alunoDao;
+		this.dao = dao;
 	}
 
 	@Path("/")
 	public void index() {
-		
-		aluno = new Aluno();
-		aluno.setNome("Flávio Arantes");
-		aluno.setNivel(Nivel.SUPERIOR);
-		aluno.setCpf(153);
-		aluno.setSenha("100xxx");
-		aluno.setSexo(Sexo.MASCULINO);
-		aluno.setEmail("flavio@email.com");
-		alunoDao.insert(aluno);
-		
+			
 		result.include("variable", "VRaptor!");
+	}
+	@Path("/error")
+	public void error() {
+		
+		alunoInvalido = new Aluno();
+
+		alunoInvalido.setNome("Flávio Arantes");
+		alunoInvalido.setNivel(Nivel.SUPERIOR);
+		alunoInvalido.setCpf(153);
+		alunoInvalido.setSenha("100xxx");
+		dao.insert(alunoInvalido);
 	}
 
 }

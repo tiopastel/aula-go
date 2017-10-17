@@ -117,4 +117,12 @@ public abstract class Pessoa implements Serializable{
 		this.endereco = endereco;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 }
