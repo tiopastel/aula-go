@@ -24,7 +24,7 @@ public class Oferta implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
+	@NotNull
 	private Professor professor;
 
 	@NotNull

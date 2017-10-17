@@ -2,14 +2,17 @@ package com.nerddash.aulago.dao;
 
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Table;
 
 import com.nerddash.aulago.model.Aluno;
 
+@RequestScoped
 public class AlunoDao {
 
+	
 	private final EntityManager em;
 
 	@Inject

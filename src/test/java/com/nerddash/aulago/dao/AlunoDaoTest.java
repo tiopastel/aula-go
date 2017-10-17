@@ -11,6 +11,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import com.nerddash.aulago.db.ConnectionFactory;
 import com.nerddash.aulago.model.Aluno;
@@ -22,13 +24,15 @@ import junit.framework.Assert;
 
 public class AlunoDaoTest {
 	
-	private EntityManager em;
+	@Mock
+    protected static EntityManager em;
+	
 	private AlunoDao dao;
 	private Aluno aluno;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		 
+		em = Mockito.mock(EntityManager.class);
 	}
 
 	@AfterClass
@@ -38,7 +42,6 @@ public class AlunoDaoTest {
 
 	@Before
 	public void setUp() throws Exception {
-		em = ConnectionFactory.getEm();
 		
 		dao = new AlunoDao(em);
 		

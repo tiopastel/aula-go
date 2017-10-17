@@ -3,38 +3,47 @@ package com.nerddash.aulago.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.inject.Inject;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import com.nerddash.aulago.security.CryptProducer;
 
+@MappedSuperclass
 public abstract class Pessoa implements Serializable{
 
 	
 	private static final long serialVersionUID = -3987080606101062491L;
 	
-	private final CryptProducer cryptProducer;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
-	@Inject
-	public Pessoa(CryptProducer cryptProducer) {
-		this.cryptProducer = cryptProducer;
-	}
-	
-	public Pessoa() {
-		this(null);
-	}
+	@Transient
+	private static final CryptProducer cryptProducer = new CryptProducer();	
 
+	@NotNull
 	protected String nome;
 
+	@NotNull
 	protected int cpf;
 	
+	@NotNull
 	protected String endereco;
 
+	@NotNull
 	protected Date dataNascimento;
 
+	@NotNull
 	protected Sexo sexo;
 
+	@NotNull
 	protected String email;
 
+	@NotNull
 	protected String senha;
 
 	public String getNome() {
