@@ -29,7 +29,6 @@ public class AlunoDao {
 	public Aluno insert(Aluno aluno) {
 		try {
 			this.em.persist(aluno);
-			em.flush();
 			return aluno;
 		} catch (Exception e) {
 			System.out.println("ERRO: " + e);

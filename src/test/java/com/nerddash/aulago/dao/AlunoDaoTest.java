@@ -51,14 +51,13 @@ public class AlunoDaoTest extends AbstractRepositoryTest {
 	@Test
 	public final void deveInserirAluno() {
 		dao.insert(aluno);
-		em.refresh(aluno);
 		assertTrue(aluno.getId() == 1);
 	}
 	
 	@Test
 	public final void deveInserirVariosAlunos() {
 		dao.insert(aluno);
-		em.refresh(aluno);
+		dao.insert(aluno);
 		assertTrue(aluno.getId() == 2);
 	}
 
