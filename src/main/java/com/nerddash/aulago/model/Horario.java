@@ -20,7 +20,7 @@ public class Horario implements Serializable{
 		this.horaInicio = horaInicio;
 		this.duracao = Duration.between(horaInicio, horaEncerra);
 	}
-
+	
 	public LocalTime getHoraInicio() {
 		return horaInicio;
 	}

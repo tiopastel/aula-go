@@ -1,14 +1,10 @@
 package com.nerddash.aulago.dao;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 
-import javax.persistence.Query;
-import javax.persistence.Table;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,10 +15,12 @@ public class ProfessorDaoTest extends AbstractRepositoryTest {
 
 	private ProfessorDao dao;
 	private ArrayList<Professor> professores;
-	private final String COLUMN_NAME = Professor.class.getAnnotation(Table.class).name();
+
 
 	@Before
 	public void setUp() throws Exception {
+		
+		this.entityClass= Professor.class;
 
 		dao = new ProfessorDao(em);
 
@@ -41,16 +39,8 @@ public class ProfessorDaoTest extends AbstractRepositoryTest {
 
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		em.clear();
-		Query query = em
-				.createNativeQuery("DELETE FROM "+COLUMN_NAME+"; ALTER TABLE "+COLUMN_NAME+" ALTER COLUMN id RESTART WITH 1;");
-		query.executeUpdate();
-	}
-
 	@Test
-	public void test() {
+	public void deveInserirListarTodosProfsDepoisRemover2Profs() {
 		for (int j = 0; j < professores.size(); j++) {
 			dao.insert(professores.get(j));
 			assertThat("Não pode encontrar o registro " + j, professores.get(j).getId(), equalTo((long) 1 + j));
