@@ -2,13 +2,13 @@ package com.nerddash.aulago.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -25,7 +25,7 @@ public class Oferta implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull
+	@OneToOne
 	private Professor professor;
 
 	@NotNull
@@ -64,9 +64,11 @@ public class Oferta implements Serializable{
 	public void setAula(Aula aula) {
 		this.aula = aula;
 	}
-	
-	public void contratar() {
-		
+
+	public Long getId() {
+		return id;
 	}
+
+	
 
 }

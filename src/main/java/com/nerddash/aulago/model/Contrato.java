@@ -43,5 +43,10 @@ public class Contrato implements Serializable{
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
 	}
+	
+	public Long getId() {
+		return id;
+	}
+
 
 }

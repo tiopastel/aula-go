@@ -46,7 +46,6 @@ public class AlunoController {
 		try {
 			dao.insert(alunoInvalido);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

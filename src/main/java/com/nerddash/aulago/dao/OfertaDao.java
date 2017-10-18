@@ -4,7 +4,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Table;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Root;
 
 import com.nerddash.aulago.model.Oferta;
 
@@ -24,32 +28,20 @@ public class OfertaDao {
 
 	public Oferta insert(Oferta oferta) {
 
-		try {
-			this.em.persist(oferta);
-			return oferta;
-		} catch (Exception e) {
-			System.out.println("ERRO: " + e);
-			return null;
-		}
+		this.em.persist(oferta);
+		em.refresh(oferta);
+		return oferta;
 	}
 
 	public Oferta get(Long id) {
-		try {
-			return this.em.find(Oferta.class, id);
-		} catch (Exception e) {
-			System.out.println("ERRO: " + e);
-			return null;
-		}
+
+		return this.em.find(Oferta.class, id);
+
 	}
 
 	public Oferta update(Oferta oferta) {
-		try {
-			return this.em.merge(oferta);
+		return this.em.merge(oferta);
 
-		} catch (Exception e) {
-			System.out.println("ERRO: " + e);
-			return null;
-		}
 	}
 
 	public boolean delete(Oferta oferta) {
@@ -58,13 +50,23 @@ public class OfertaDao {
 			return true;
 
 		} catch (Exception e) {
-			System.out.println("ERRO: " + e);
 			return false;
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<Oferta> listAll() {
-		return em.createQuery("Select t from " + Oferta.class.getAnnotation(Table.class).name() + " t").getResultList();
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		CriteriaQuery<Oferta> query = criteriaBuilder.createQuery(Oferta.class);
+
+		Root<Oferta> root = query.from(Oferta.class);
+		Order[] orderBy = { criteriaBuilder.asc(root.get("id")) };
+
+		query.select(root);
+
+		query.orderBy(orderBy);
+
+		TypedQuery<Oferta> typedQuery = em.createQuery(query);
+
+		return typedQuery.getResultList();
 	}
 }
