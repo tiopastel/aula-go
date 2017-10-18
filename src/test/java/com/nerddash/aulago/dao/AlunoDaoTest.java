@@ -1,89 +1,75 @@
 package com.nerddash.aulago.dao;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.jboss.weld.executor.DaemonThreadFactory;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.nerddash.aulago.db.ConnectionFactory;
 import com.nerddash.aulago.model.Aluno;
 import com.nerddash.aulago.model.Nivel;
-import com.nerddash.aulago.model.Pessoa.Sexo;
+import com.nerddash.aulago.repository.AbstractRepositoryTest;
 
-import junit.framework.Assert;
+public class AlunoDaoTest extends AbstractRepositoryTest {
 
-
-public class AlunoDaoTest {
-	
-	private EntityManager em;
+	private List<Aluno> alunos;
 	private AlunoDao dao;
-	private Aluno aluno;
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		 
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		
-	}
 
 	@Before
 	public void setUp() throws Exception {
-		em = ConnectionFactory.getEm();
-		
+
+		this.entityClass = Aluno.class;
+
 		dao = new AlunoDao(em);
-		
-//		Operation operation = Operations.sequenceOf(OperacoesComunsBD.LIMPA_TUDO, OperacoesComunsBD.RESET_AUTOINCREMENT_H2);
-		aluno = new Aluno();
-		aluno.setNome("Flávio Arantes");
-		aluno.setNivel(Nivel.SUPERIOR);
-		aluno.setCpf(153);
-		aluno.setSenha("100xxx");
-		aluno.setSexo(Sexo.MASCULINO);
-		aluno.setEmail("flavio@email.com");
-		
-		
+
+		alunos = new ArrayList<Aluno>();
+
+		for (int i = 0; i < 10; i++) {
+
+			Aluno aluno = new Aluno();
+			aluno.setNome("Flávio Arantes");
+			aluno.setNivel(Nivel.SUPERIOR);
+			aluno.setSenha("100xxx");
+			aluno.setEmail("flavio" + i + "@email.com");
+			aluno.setCurso("Curso");
+			alunos.add(aluno);
+		}
+
+	}
+
+	@Test
+	public final void deveInserirListarTodosAlunosDepoisRemover2Alunos() {
+
+		for (int j = 0; j < alunos.size(); j++) {
+			dao.insert(alunos.get(j));
+			assertThat("Não pode encontrar o registro " + j, alunos.get(j).getId(), equalTo((long) 1 + j));
+		}
+		assertThat("Não consegiu listar todos as tuplas", dao.listAll().size(), equalTo(10));
+
+		dao.delete(alunos.get(4));
+		dao.delete(alunos.get(7));
+
+		assertThat("Houve algum problema ao excluir as tuplas", dao.listAll().size(), equalTo(8));
+
+	}
 	
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		em.close();
-	}
-
 	@Test
-	public final void testInsert() {
-		Assert.assertNotNull(dao.insert(aluno));
-		
-	}
+	public final void deveInserirListarTodosAlunosDepoisRemover2AlunosDeNovo() {
 
-	@Test
-	public final void testGet() {
-		fail("Not yet implemented");
-	}
+		for (int j = 0; j < alunos.size(); j++) {
+			dao.insert(alunos.get(j));
+			assertThat("Não pode encontrar o registro " + j, alunos.get(j).getId(), equalTo((long) 1 + j));
+		}
+		assertThat("Não consegiu listar todos as tuplas", dao.listAll().size(), equalTo(10));
 
-	@Test
-	public final void testUpdate() {
-		fail("Not yet implemented");
-	}
+		dao.delete(alunos.get(4));
+		dao.delete(alunos.get(7));
 
-	@Test
-	public final void testDelete() {
-		fail("Not yet implemented");
-	}
+		assertThat("Houve algum problema ao excluir as tuplas", dao.listAll().size(), equalTo(8));
 
-	@Test
-	public final void testListAll() {
-		fail("Not yet implemented");
 	}
 
 }

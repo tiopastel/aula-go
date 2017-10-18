@@ -2,12 +2,18 @@ package com.nerddash.aulago.dao;
 
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Table;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Root;
 
 import com.nerddash.aulago.model.Contrato;
 
+@RequestScoped
 public class ContratoDao {
 
 	private final EntityManager em;
@@ -25,32 +31,20 @@ public class ContratoDao {
 
 	public Contrato insert(Contrato contrato) {
 
-		try {
-			this.em.persist(contrato);
-			return contrato;
-		} catch (Exception e) {
-			System.out.println("ERRO: " + e);
-			return null;
-		}
+		this.em.persist(contrato);
+		em.refresh(contrato);
+		return contrato;
 	}
 
 	public Contrato get(Long id) {
-		try {
-			return this.em.find(Contrato.class, id);
-		} catch (Exception e) {
-			System.out.println("ERRO: " + e);
-			return null;
-		}
+
+		return this.em.find(Contrato.class, id);
 	}
 
 	public Contrato update(Contrato contrato) {
-		try {
-			return this.em.merge(contrato);
 
-		} catch (Exception e) {
-			System.out.println("ERRO: " + e);
-			return null;
-		}
+		return this.em.merge(contrato);
+
 	}
 
 	public boolean delete(Contrato contrato) {
@@ -59,13 +53,24 @@ public class ContratoDao {
 			return true;
 
 		} catch (Exception e) {
-			System.out.println("ERRO: " + e);
+
 			return false;
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<Contrato> listAll() {
-		return em.createQuery("Select t from " + Contrato.class.getAnnotation(Table.class).name() + " t").getResultList();
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		CriteriaQuery<Contrato> query = criteriaBuilder.createQuery(Contrato.class);
+
+		Root<Contrato> root = query.from(Contrato.class);
+		Order[] orderBy = { criteriaBuilder.asc(root.get("id")) };
+
+		query.select(root);
+
+		query.orderBy(orderBy);
+
+		TypedQuery<Contrato> typedQuery = em.createQuery(query);
+
+		return typedQuery.getResultList();
 	}
 }

@@ -1,13 +1,14 @@
 package com.nerddash.aulago.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity
@@ -16,22 +17,24 @@ public class Professor extends Pessoa implements Serializable {
 
 	private static final long serialVersionUID = 2915126383016759855L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
 	private String resumo;
 
-	@NotNull
+	@NotEmpty
 	private String formacao;
 
 	private String lattes;
-
+	
+	@Min(value = 0)
 	private int leads;
 
+	@Min(value = 0)
 	private float reputacao;
 
+	@Min(value = 0)
 	private int aulasMinistradas;
+	
+	@OneToMany
+	private List<Oferta> ofertas;
 
 	public String getFormacao() {
 		return formacao;
@@ -51,10 +54,6 @@ public class Professor extends Pessoa implements Serializable {
 
 	public int getLeads() {
 		return leads;
-	}
-
-	public void setLeads(int leads) {
-		this.leads = leads;
 	}
 
 	public float getReputacao() {
@@ -87,8 +86,16 @@ public class Professor extends Pessoa implements Serializable {
 	}
 
 	public int removeLead() {
-		--this.leads;
+		this.leads -= this.leads;
 		return this.leads;
+	}
+
+	public List<Oferta> getOfertas() {
+		return ofertas;
+	}
+
+	public void setOfertas(List<Oferta> ofertas) {
+		this.ofertas = ofertas;
 	}
 
 }

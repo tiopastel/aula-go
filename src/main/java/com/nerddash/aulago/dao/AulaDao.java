@@ -11,68 +11,62 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
-import com.nerddash.aulago.model.Busca;
+import com.nerddash.aulago.model.Aula;
 
 @RequestScoped
-public class BuscaDao {
-	private final EntityManager em;
+public class AulaDao {
+
+	private EntityManager em;
 
 	@Inject
-	public BuscaDao(EntityManager em) {
+	public AulaDao(EntityManager em) {
 		this.em = em;
+
 	}
 
-	// CDI only use
 	@Deprecated
-	public BuscaDao() {
+	public AulaDao() {
 		this(null);
 	}
 
-	public Busca insert(Busca busca) {
-
-		this.em.persist(busca);
-		em.refresh(busca);
-		return busca;
-
+	public Aula insert(Aula aula) {
+		em.persist(aula);
+		em.refresh(aula);
+		return aula;
 	}
 
-	public Busca get(Long id) {
-
-		return this.em.find(Busca.class, id);
-
+	public Aula get(Long id) {
+		return em.find(Aula.class, id);
 	}
 
-	public Busca update(Busca busca) {
-
-		return this.em.merge(busca);
-
+	public Aula update(Aula aula) {
+		return em.merge(aula);
 	}
 
-	public boolean delete(Busca busca) {
+	public boolean delete(Aula aula) {
 		try {
-			this.em.remove(busca);
+			this.em.remove(aula);
 			return true;
 
 		} catch (Exception e) {
 			return false;
 		}
 	}
-
-	public List<Busca> listAll() {
+	
+	public List<Aula> listAll() {
 		
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-		CriteriaQuery<Busca> query = criteriaBuilder.createQuery(Busca.class);
+		CriteriaQuery<Aula> query = criteriaBuilder.createQuery(Aula.class);
 
-		Root<Busca> root = query.from(Busca.class);
+		Root<Aula> root = query.from(Aula.class);
 		Order[] orderBy = { criteriaBuilder.asc(root.get("id")) };
 
 		query.select(root);
 
 		query.orderBy(orderBy);
 
-		TypedQuery<Busca> typedQuery = em.createQuery(query);
+		TypedQuery<Aula> typedQuery = em.createQuery(query);
 
 		return typedQuery.getResultList();
 	}
-
 }

@@ -1,40 +1,42 @@
 package com.nerddash.aulago.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
-import javax.inject.Inject;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.nerddash.aulago.security.CryptProducer;
 
-public abstract class Pessoa implements Serializable{
+@MappedSuperclass
+public abstract class Pessoa implements Serializable {
 
-	
 	private static final long serialVersionUID = -3987080606101062491L;
-	
-	private final CryptProducer cryptProducer;
-	
-	@Inject
-	public Pessoa(CryptProducer cryptProducer) {
-		this.cryptProducer = cryptProducer;
-	}
-	
-	public Pessoa() {
-		this(null);
-	}
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Transient
+	private static final CryptProducer cryptProducer = new CryptProducer();
+
+	@NotEmpty
 	protected String nome;
 
-	protected int cpf;
-	
-	protected String endereco;
-
-	protected Date dataNascimento;
-
-	protected Sexo sexo;
-
+	@NotNull
+	@Email
+	@Column(unique=true)
 	protected String email;
 
+	@Length(min = 6)
 	protected String senha;
 
 	public String getNome() {
@@ -43,22 +45,6 @@ public abstract class Pessoa implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public int getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(int cpf) {
-		this.cpf = cpf;
-	}
-
-	public Date getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
 	}
 
 	public String getEmail() {
@@ -74,38 +60,19 @@ public abstract class Pessoa implements Serializable{
 	}
 
 	public void setSenha(String senha) {
-		this.senha = cryptProducer.encryptPassword(senha);
-	}
-
-	public enum Sexo {
-		MASCULINO("Masculino"), FEMININO("Feminino");
-
-		private String value;
-
-		Sexo(String value) {
-			this.value = value;
-		}
-
-		@Override
-		public String toString() {
-			return value;
+		if (senha.length() > 5) {
+			this.senha = cryptProducer.encryptPassword(senha);
+		} else {
+			this.senha = senha;
 		}
 	}
 
-	public Sexo getSexo() {
-		return sexo;
+	public Long getId() {
+		return id;
 	}
 
-	public void setSexo(Sexo sexo) {
-		this.sexo = sexo;
-	}
-
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

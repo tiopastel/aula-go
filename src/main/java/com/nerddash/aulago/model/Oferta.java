@@ -1,40 +1,51 @@
 package com.nerddash.aulago.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
-@Table(name="OFERTAS")
-public class Oferta implements Serializable{
+@Table(name = "OFERTAS")
+public class Oferta implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7458430838857808802L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
+	@OneToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Professor professor;
 
 	@NotNull
-	private Date dataInicial;
+	private LocalDate dataInicial = LocalDate.now();
 
 	@NotNull
-	private Date dataFinal;
+	private LocalDate dataFinal;
 
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Aula aula;
+
+	@Min(value = 0)
+	private BigDecimal preco;
 
 	public Professor getProfessor() {
 		return professor;
@@ -44,19 +55,15 @@ public class Oferta implements Serializable{
 		this.professor = professor;
 	}
 
-	public Date getDataInicial() {
+	public LocalDate getDataInicial() {
 		return dataInicial;
 	}
 
-	public void setDataInicial(Date dataInicial) {
-		this.dataInicial = dataInicial;
-	}
-
-	public Date getDataFinal() {
+	public LocalDate getDataFinal() {
 		return dataFinal;
 	}
 
-	public void setDataFinal(Date dataFinal) {
+	public void setDataFinal(LocalDate dataFinal) {
 		this.dataFinal = dataFinal;
 	}
 
@@ -67,9 +74,17 @@ public class Oferta implements Serializable{
 	public void setAula(Aula aula) {
 		this.aula = aula;
 	}
-	
-	public void contratar() {
-		
+
+	public Long getId() {
+		return id;
+	}
+
+	public BigDecimal getPreco() {
+		return preco;
+	}
+
+	public void setPreco(double preco) {
+		this.preco = BigDecimal.valueOf(preco);
 	}
 
 }

@@ -1,15 +1,19 @@
 package com.nerddash.aulago.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 @Entity
@@ -25,16 +29,27 @@ public class Busca implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@NotNull
+	@OneToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Aluno aluno;
 
-	@NotNull
-	private Date dataInicial;
+	private LocalDate dataInicial = LocalDate.now();
 
 	@NotNull
-	private Date dataFinal;
+	private LocalDate dataFinal;
 
 	@NotNull
+	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Aula aula;
 
 	public Aluno getAluno() {
@@ -45,20 +60,20 @@ public class Busca implements Serializable {
 		this.aluno = aluno;
 	}
 
-	public Date getDataInicial() {
+	public LocalDate getDataInicial() {
 		return dataInicial;
 	}
 
-	public void setDataInicial(Date dataInicial) {
-		this.dataInicial = dataInicial;
-	}
-
-	public Date getDataFinal() {
+	public LocalDate getDataFinal() {
 		return dataFinal;
 	}
 
-	public void setDataFinal(Date dataFinal) {
-		this.dataFinal = dataFinal;
+	public void setDataFinal(LocalDate dataFinal) throws Exception {
+		if(dataFinal.isAfter(LocalDate.now())) {
+			this.dataFinal = dataFinal;			
+		}else {
+			throw new Exception("A data final deve ser uma data futura.");
+		}
 	}
 
 	public Aula getAula() {
@@ -67,10 +82,6 @@ public class Busca implements Serializable {
 
 	public void setAula(Aula aula) {
 		this.aula = aula;
-	}
-	
-	public void criarOferta() {
-		
 	}
 
 }
