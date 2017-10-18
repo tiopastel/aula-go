@@ -5,7 +5,6 @@ import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.persistence.Query;
 

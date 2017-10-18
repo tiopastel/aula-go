@@ -9,6 +9,9 @@ import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
 
+import com.nerddash.aulago.model.Aluno;
+import com.nerddash.aulago.model.Nivel;
+
 public class PessoaTest {
 
 	private Aluno alunoInvalido;

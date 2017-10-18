@@ -6,7 +6,9 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity
@@ -17,15 +19,18 @@ public class Professor extends Pessoa implements Serializable {
 
 	private String resumo;
 
-	@NotNull
+	@NotEmpty
 	private String formacao;
 
 	private String lattes;
-
+	
+	@Min(value = 0)
 	private int leads;
 
+	@Min(value = 0)
 	private float reputacao;
 
+	@Min(value = 0)
 	private int aulasMinistradas;
 	
 	@OneToMany
@@ -49,10 +54,6 @@ public class Professor extends Pessoa implements Serializable {
 
 	public int getLeads() {
 		return leads;
-	}
-
-	public void setLeads(int leads) {
-		this.leads = leads;
 	}
 
 	public float getReputacao() {
@@ -85,7 +86,7 @@ public class Professor extends Pessoa implements Serializable {
 	}
 
 	public int removeLead() {
-		--this.leads;
+		this.leads -= this.leads;
 		return this.leads;
 	}
 

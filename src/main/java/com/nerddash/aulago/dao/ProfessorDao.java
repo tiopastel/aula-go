@@ -4,7 +4,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Table;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Root;
 
 import com.nerddash.aulago.model.Professor;
 
@@ -24,32 +28,20 @@ public class ProfessorDao {
 
 	public Professor insert(Professor professor) {
 
-		try {
-			this.em.persist(professor);
-			return professor;
-		} catch (Exception e) {
-			System.out.println("ERRO: " + e);
-			return null;
-		}
+		this.em.persist(professor);
+		em.refresh(professor);
+		return professor;
+
 	}
 
 	public Professor get(Long id) {
-		try {
-			return this.em.find(Professor.class, id);
-		} catch (Exception e) {
-			System.out.println("ERRO: " + e);
-			return null;
-		}
+
+		return this.em.find(Professor.class, id);
 	}
 
 	public Professor update(Professor professor) {
-		try {
+		
 			return this.em.merge(professor);
-
-		} catch (Exception e) {
-			System.out.println("ERRO: " + e);
-			return null;
-		}
 	}
 
 	public boolean delete(Professor professor) {
@@ -58,14 +50,25 @@ public class ProfessorDao {
 			return true;
 
 		} catch (Exception e) {
-			System.out.println("ERRO: " + e);
 			return false;
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<Professor> listAll() {
-		return em.createQuery("Select t from " + Professor.class.getAnnotation(Table.class).name() + " t").getResultList();
+		
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		CriteriaQuery<Professor> query = criteriaBuilder.createQuery(Professor.class);
+
+		Root<Professor> root = query.from(Professor.class);
+		Order[] orderBy = { criteriaBuilder.asc(root.get("nome")) };
+
+		query.select(root);
+
+		query.orderBy(orderBy);
+
+		TypedQuery<Professor> typedQuery = em.createQuery(query);
+
+		return typedQuery.getResultList();
 	}
 
 }
