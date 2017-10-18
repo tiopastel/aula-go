@@ -1,13 +1,14 @@
-# VRaptor blank project
+# AulaGo - Aproximando Professores e Estudantes
 
-This is a blank project to help you to use VRaptor. You can easily import in you IDE as Maven project.
+Este projeto é parte do produto AulaGo que será apresentado na Mostra de Produtos Tecnológicos 2017 do IFTM Uberaba Parque Tecnológico. 
 
-Este é um projeto em branco para ajudar você a usar o VRaptor. Você pode facilmente importá-lo na sua IDE favorita como um projeto Maven.
+Projeto desenvolvido e mantido pelos alunos do 6º período de Análise e Desenvolvimento de Sistemas:
 
-Após criar seu projeto você pode rodá-lo com um tomcat7 ou +:
+  VICTOR NASCIMENTO JULIANO GOMES
+  VICTOR HUGO KOMORI SILVA
+  RAFAEL SAMPAIO ROCHA MACHADO
+  GABRIEL DIAS COUTO
+  FLAVIO ARANTES DO AMORIM BARCELOS
+  EMMANUEL ALVES DE OLIVEIRA
 
-```
-mvn tomcat7:run
-```
-
-Cuidado para *jamais* executar `mvn tomcat:run` pois ele usará um tomcat6 (incompatível).
+Todo conteúdo neste projeto é de uso livre contudo deve ser citada a fonte.
