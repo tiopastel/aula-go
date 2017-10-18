@@ -12,6 +12,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 
 @Entity
 @Table(name="BUSCAS")
@@ -36,6 +39,7 @@ public class Busca implements Serializable {
 
 	@NotNull
 	@OneToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Aluno aluno;
 
 	private LocalDate dataInicial = LocalDate.now();
@@ -45,6 +49,7 @@ public class Busca implements Serializable {
 
 	@NotNull
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Aula aula;
 
 	public Aluno getAluno() {

@@ -1,6 +1,7 @@
 package com.nerddash.aulago.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
@@ -10,22 +11,27 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
-@Table(name="OFERTAS")
-public class Oferta implements Serializable{
+@Table(name = "OFERTAS")
+public class Oferta implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7458430838857808802L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@OneToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Professor professor;
 
 	@NotNull
@@ -35,7 +41,11 @@ public class Oferta implements Serializable{
 	private LocalDate dataFinal;
 
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Aula aula;
+
+	@Min(value = 0)
+	private BigDecimal preco;
 
 	public Professor getProfessor() {
 		return professor;
@@ -69,6 +79,12 @@ public class Oferta implements Serializable{
 		return id;
 	}
 
-	
+	public BigDecimal getPreco() {
+		return preco;
+	}
+
+	public void setPreco(double preco) {
+		this.preco = BigDecimal.valueOf(preco);
+	}
 
 }

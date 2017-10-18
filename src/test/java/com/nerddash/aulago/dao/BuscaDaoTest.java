@@ -57,7 +57,6 @@ public class BuscaDaoTest extends AbstractRepositoryTest{
 		aula.setHorario(new Horario(LocalTime.now(), LocalTime.MIDNIGHT));
 		aula.setMateria("Matemática Discreta");
 		aula.setNivel(Nivel.SUPERIOR);
-		aula.setPreco(15.50);
 		
 		daoAula.insert(aula);
 		
@@ -84,6 +83,21 @@ public class BuscaDaoTest extends AbstractRepositoryTest{
 
 	@Test
 	public void deveInserirListarTodosBuscasDepoisRemover2Buscas() {
+
+		for (int j = 0; j < buscas.size(); j++) {
+			dao.insert(buscas.get(j));
+			assertThat("Não pode encontrar o registro " + j, buscas.get(j).getId(), equalTo((long) 1 + j));
+		}
+		assertThat("Não consegiu listar todos as tuplas", dao.listAll().size(), equalTo(10));
+
+		dao.delete(buscas.get(4));
+		dao.delete(buscas.get(7));
+
+		assertThat("Houve algum problema ao excluir as tuplas", dao.listAll().size(), equalTo(8));
+	}
+	
+	@Test
+	public void deveInserirListarTodosBuscasDepoisRemover2BuscasDeNovo() {
 
 		for (int j = 0; j < buscas.size(); j++) {
 			dao.insert(buscas.get(j));

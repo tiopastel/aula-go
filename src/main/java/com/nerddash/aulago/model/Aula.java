@@ -31,8 +31,7 @@ public class Aula implements Serializable {
 
 	private Horario horario;
 
-	@Min(value = 0)
-	private BigDecimal preco;
+
 
 	public Nivel getNivel() {
 		return nivel;
@@ -58,13 +57,6 @@ public class Aula implements Serializable {
 		this.horario = horario;
 	}
 
-	public BigDecimal getPreco() {
-		return preco;
-	}
-
-	public void setPreco(double preco) {
-		this.preco = BigDecimal.valueOf(preco);
-	}
 
 	public Long getId() {
 		return id;

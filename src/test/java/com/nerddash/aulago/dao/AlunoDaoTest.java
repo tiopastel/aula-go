@@ -55,5 +55,21 @@ public class AlunoDaoTest extends AbstractRepositoryTest {
 		assertThat("Houve algum problema ao excluir as tuplas", dao.listAll().size(), equalTo(8));
 
 	}
+	
+	@Test
+	public final void deveInserirListarTodosAlunosDepoisRemover2AlunosDeNovo() {
+
+		for (int j = 0; j < alunos.size(); j++) {
+			dao.insert(alunos.get(j));
+			assertThat("Não pode encontrar o registro " + j, alunos.get(j).getId(), equalTo((long) 1 + j));
+		}
+		assertThat("Não consegiu listar todos as tuplas", dao.listAll().size(), equalTo(10));
+
+		dao.delete(alunos.get(4));
+		dao.delete(alunos.get(7));
+
+		assertThat("Houve algum problema ao excluir as tuplas", dao.listAll().size(), equalTo(8));
+
+	}
 
 }
