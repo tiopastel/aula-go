@@ -1,7 +1,6 @@
 package com.nerddash.aulago.rest;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 
 import com.nerddash.aulago.dao.AlunoDao;
 import com.nerddash.aulago.model.Aluno;
@@ -17,7 +16,6 @@ public class AlunoController {
 	
 	private final Result result;
 	private Aluno alunoInvalido;
-	private EntityManager em;
 	private AlunoDao dao;
 	/**
 	 * @deprecated CDI eyes only
@@ -44,9 +42,13 @@ public class AlunoController {
 
 		alunoInvalido.setNome("Flávio Arantes");
 		alunoInvalido.setNivel(Nivel.SUPERIOR);
-		alunoInvalido.setCpf(153);
 		alunoInvalido.setSenha("100xxx");
-		dao.insert(alunoInvalido);
+		try {
+			dao.insert(alunoInvalido);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
