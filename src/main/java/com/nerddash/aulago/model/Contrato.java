@@ -31,6 +31,8 @@ public class Contrato implements Serializable{
 	@NotNull
 	@OneToOne
 	private Aluno aluno;
+	
+	private int avaliacao;
 
 	public Oferta getOferta() {
 		return oferta;
@@ -50,6 +52,14 @@ public class Contrato implements Serializable{
 	
 	public Long getId() {
 		return id;
+	}
+
+	public int getAvaliacao() {
+		return avaliacao;
+	}
+
+	public void setAvaliacao(int avaliacao) {
+		this.avaliacao = avaliacao;
 	}
 
 

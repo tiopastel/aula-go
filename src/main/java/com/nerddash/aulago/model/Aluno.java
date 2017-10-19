@@ -57,4 +57,10 @@ public class Aluno extends Pessoa implements Serializable {
 		this.aulasContradas = aulasContradas;
 	}
 
+	@Override
+	public String toString() {
+		return "Aluno [nivel=" + nivel + ", curso=" + curso + ", buscas=" + buscas + ", aulasContradas="
+				+ aulasContradas + ", id=" + id + ", nome=" + nome + ", email=" + email + "]";
+	}
+
 }

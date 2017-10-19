@@ -23,7 +23,7 @@ public abstract class Pessoa implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	protected Long id;
 
 	@Transient
 	private static final CryptProducer cryptProducer = new CryptProducer();
@@ -71,8 +71,5 @@ public abstract class Pessoa implements Serializable {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 }
