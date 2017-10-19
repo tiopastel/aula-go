@@ -1,0 +1,28 @@
+package com.nerddash.aulago.api;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class AlunoControllerTest extends AbstractWebDriverTestClass {
+
+	public AlunoControllerTest(String endereco) {
+		super(endereco);
+	}
+
+	@Before
+	public void setUp() throws Exception {
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}

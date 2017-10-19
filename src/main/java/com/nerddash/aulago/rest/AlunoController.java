@@ -39,6 +39,8 @@ public class AlunoController {
 	@Post("/aluno/")
 	public Aluno insere(Aluno aluno) {
 		aluno = dao.insert(aluno);
+		validator.onErrorRedirectTo(ErrorController.class).error();
+		result.use(json()).from(aluno).serialize();
 		return aluno;
 	}
 
@@ -46,6 +48,7 @@ public class AlunoController {
 	public Aluno get(Aluno aluno) {
 
 		aluno = dao.get(aluno.getId());
+		validator.onErrorRedirectTo(ErrorController.class).error();
 		result.use(json()).from(aluno).serialize();
 		return aluno;
 
@@ -53,12 +56,15 @@ public class AlunoController {
 	
 	@Delete("/aluno/{aluno.id}")
 	public boolean delete(Aluno aluno) {
+		validator.onErrorRedirectTo(ErrorController.class).error();
 		return dao.delete(aluno);
 		
 	}
 	
 	@Put("/aluno/")
 	public Aluno atualiza(Aluno aluno) {
+		validator.onErrorRedirectTo(ErrorController.class).error();
+		result.use(json()).from(aluno).serialize();
 		return dao.update(aluno);
 		
 	}
