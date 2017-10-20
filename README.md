@@ -1,8 +1,8 @@
-##AulaGo - Server
+## AulaGo Server
 
 > Este repositório contém o *back-end* utilizado no projeto AulaGO, para o *front-end* siga esse link.
 
-####Sobre o AulaGO
+#### Sobre o AulaGO
 
 AulaGO é um software que visa a aproximação de professores e estudantes, desenvolvido para apresentação na Mostra de Produtos Tecnológicos 2017 do Campus Avançado Uberaba Parque Tecnológico.
 
