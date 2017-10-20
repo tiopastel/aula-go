@@ -1,14 +1,11 @@
-# AulaGo - Aproximando Professores e Estudantes
+##AulaGo - Server
 
-Este projeto é parte do produto AulaGo que será apresentado na Mostra de Produtos Tecnológicos 2017 do IFTM Uberaba Parque Tecnológico. 
+> Este repositório contém o *back-end* utilizado no projeto AulaGO, para o *front-end* siga esse link.
 
-Projeto desenvolvido e mantido pelos alunos do 6º período de Análise e Desenvolvimento de Sistemas:
+####Sobre o AulaGO
 
-- VICTOR NASCIMENTO JULIANO GOMES
-- VICTOR HUGO KOMORI SILVA
-- RAFAEL SAMPAIO ROCHA MACHADO
-- GABRIEL DIAS COUTO
-- FLAVIO ARANTES DO AMORIM BARCELOS
-- EMMANUEL ALVES DE OLIVEIRA
+AulaGO é um software que visa a aproximação de professores e estudantes, desenvolvido para apresentação na Mostra de Produtos Tecnológicos 2017 do Campus Avançado Uberaba Parque Tecnológico.
 
-Todo conteúdo neste projeto é de uso livre contudo deve ser citada a fonte.
+Projeto desenvolvido e mantido por alunos do 6º período do Curso Superior de Tecnologia em Análise e Desenvolvimento de Sistemas.
+
+Todo conteúdo deste repositório é disponibilizado sob a Licença MIT, para mais informações cheque a referida [licença](License.md).
