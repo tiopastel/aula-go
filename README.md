@@ -1,6 +1,6 @@
 ## AulaGo Server
 
-> Este repositório contém o *back-end* utilizado no projeto AulaGO, para o *front-end* siga esse link.
+> Este repositório contém o *back-end* utilizado no projeto AulaGO, para o *front-end* siga esse [link](https://github.com/victornjg/AulaGoApp).
 
 #### Sobre o AulaGO
 
