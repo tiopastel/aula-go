@@ -1,6 +1,5 @@
 package com.nerddash.aulago.model;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -13,7 +12,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "PROFESSORES")
-public class Professor extends Pessoa implements Serializable {
+public class Professor extends Pessoa {
 
 	private static final long serialVersionUID = 2915126383016759855L;
 

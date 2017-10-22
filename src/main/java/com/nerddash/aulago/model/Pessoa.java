@@ -1,7 +1,5 @@
 package com.nerddash.aulago.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,10 +15,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.nerddash.aulago.security.CryptProducer;
 
 @MappedSuperclass
-public abstract class Pessoa implements Serializable {
+public abstract class Pessoa extends AbstractEntityClass{
 
 	private static final long serialVersionUID = -3987080606101062491L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
@@ -71,5 +69,8 @@ public abstract class Pessoa implements Serializable {
 		return id;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 }

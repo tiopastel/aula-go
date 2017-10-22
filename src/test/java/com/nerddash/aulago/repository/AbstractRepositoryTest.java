@@ -10,11 +10,13 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
+import com.nerddash.aulago.model.AbstractEntityClass;
+
 public abstract class AbstractRepositoryTest {
 
 	protected static EntityManagerFactory emFactory;
 	protected static EntityManager em;
-	protected Class<?> entityClass;
+	protected AbstractEntityClass entityObject;
 	
 	/**
 	 * Abrindo conexão com o Database, criando a EntityManager e abrindo a
@@ -22,8 +24,8 @@ public abstract class AbstractRepositoryTest {
 	 */
 	
 	@BeforeClass
-	public static void beforeClass() throws Exception {
-		emFactory = Persistence.createEntityManagerFactory("seu-ejbPU-test");
+	public static void setUpBeforeClass() throws Exception {
+		emFactory = Persistence.createEntityManagerFactory("default");
 		em = emFactory.createEntityManager();
 		em.getTransaction().begin();
 	}
@@ -32,7 +34,7 @@ public abstract class AbstractRepositoryTest {
 	 * Comita a transação, encerra a EntityManager e a factory.
 	 */
 	@AfterClass
-	public static void afterClass() throws Exception {
+	public static void tearDownAfterClass() throws Exception {
 		em.getTransaction().commit();
         em.close();
         emFactory.close();
@@ -41,19 +43,19 @@ public abstract class AbstractRepositoryTest {
 	@After
 	public void tearDown() throws Exception {
 		em.clear();
-		resetTable(this.entityClass);
+		resetTable(this.entityObject);
 
 	}
 	
-	protected void resetTable(Class<?>  entityClass) {
-		String COLUMN_NAME = getColumnName(entityClass);
-		Query query = em.createNativeQuery("DELETE FROM "+COLUMN_NAME+"; ALTER TABLE "+COLUMN_NAME+" ALTER COLUMN id RESTART WITH 1;");
+	protected void resetTable(AbstractEntityClass  entityClass2) {
+		String COLUMN_NAME = getColumnName(entityClass2);
+		Query query = em.createNativeQuery("DELETE FROM "+COLUMN_NAME+" WHERE id > 0; ALTER TABLE "+COLUMN_NAME+" ALTER COLUMN id RESTART WITH 1;");
 		query.executeUpdate();
 	}
 	
 
-	protected String getColumnName(Class<?> entityClass) {
-		return ((Table) entityClass.getAnnotation(Table.class)).name();
+	protected String getColumnName(AbstractEntityClass entityClass) {
+		return ((Table) entityClass.getClass().getAnnotation(Table.class)).name();
 	}
 
 }

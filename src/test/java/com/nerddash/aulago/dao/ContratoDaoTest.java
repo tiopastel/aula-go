@@ -38,7 +38,7 @@ public class ContratoDaoTest extends AbstractRepositoryTest{
 	@Before
 	public void setUp() throws Exception {
 		
-		this.entityClass = Contrato.class;
+		this.entityObject = new Contrato();
 		
 		dao = new ContratoDao(em);
 		daoOferta = new OfertaDao(em);
@@ -102,10 +102,10 @@ public class ContratoDaoTest extends AbstractRepositoryTest{
 	@After
 	public void tearDown() throws Exception {
 		super.tearDown();
-		resetTable(Aluno.class);
-		resetTable(Aula.class);
-		resetTable(Professor.class);
-		resetTable(Oferta.class);
+		resetTable(aluno);
+		resetTable(aula);
+		resetTable(professor);
+		resetTable(oferta);
 	}
 
 	@Test

@@ -19,18 +19,19 @@ public class AulaDaoTest extends AbstractRepositoryTest {
 	
 	private List<Aula> aulas;
 	private AulaDao dao;
+	private Aula aula;
 
 	@Before
 	public void setUp() throws Exception {
 
-		this.entityClass = Aula.class;
+		this.entityObject = new Aula();
 		
 		dao = new AulaDao(em);
 		
 		aulas = new ArrayList<Aula>();
 		
 		for (int i = 0; i < 10; i++) {
-			Aula aula = new Aula();
+			aula = new Aula();
 			aula.setHorario(new Horario(LocalTime.now(), LocalTime.MIDNIGHT));
 			aula.setMateria("Matemática Discreta");
 			aula.setNivel(Nivel.SUPERIOR);

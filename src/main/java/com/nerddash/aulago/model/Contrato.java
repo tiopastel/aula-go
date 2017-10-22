@@ -1,7 +1,5 @@
 package com.nerddash.aulago.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,16 +11,16 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="CONTRATOS")
-public class Contrato implements Serializable{
+public class Contrato  extends AbstractEntityClass{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 386845522672359372L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	protected Long id;
 	
 	@NotNull
 	@ManyToOne
@@ -60,6 +58,10 @@ public class Contrato implements Serializable{
 
 	public void setAvaliacao(int avaliacao) {
 		this.avaliacao = avaliacao;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 

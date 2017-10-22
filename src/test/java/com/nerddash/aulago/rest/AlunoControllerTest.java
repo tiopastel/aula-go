@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -14,13 +14,11 @@ import org.junit.Test;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
-
 import com.nerddash.aulago.dao.AlunoDao;
 import com.nerddash.aulago.model.Aluno;
 import com.nerddash.aulago.model.Nivel;
 
 import br.com.caelum.vraptor.util.test.MockResult;
-import br.com.caelum.vraptor.util.test.MockValidator;
 
 public class AlunoControllerTest {
 	
@@ -30,21 +28,17 @@ public class AlunoControllerTest {
 	
 	private AlunoDao dao;
 	private MockResult result;
-	private MockValidator validator;
 	private Aluno aluno;
 	private AlunoController alunoController;
 
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception {		
 		
-		
-		result = new MockResult();
-		validator = new MockValidator();
-		
+		result = new MockResult();		
 		dao = mock(AlunoDao.class);	
 		
-		alunoController = new AlunoController(result, dao, validator);		
+		alunoController = new AlunoController(result, dao);		
 
 		
 		for (int i = 0; i < 10; i++) {

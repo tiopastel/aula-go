@@ -1,6 +1,5 @@
 package com.nerddash.aulago.model;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
@@ -15,27 +14,18 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-
 @Entity
-@Table(name="BUSCAS")
-public class Busca implements Serializable {
+@Table(name = "BUSCAS")
+public class Busca extends AbstractEntityClass {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6858953411847427654L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	protected Long id;
 
 	@NotNull
 	@OneToOne
@@ -69,9 +59,9 @@ public class Busca implements Serializable {
 	}
 
 	public void setDataFinal(LocalDate dataFinal) throws Exception {
-		if(dataFinal.isAfter(LocalDate.now())) {
-			this.dataFinal = dataFinal;			
-		}else {
+		if (dataFinal.isAfter(LocalDate.now())) {
+			this.dataFinal = dataFinal;
+		} else {
 			throw new Exception("A data final deve ser uma data futura.");
 		}
 	}
@@ -82,6 +72,14 @@ public class Busca implements Serializable {
 
 	public void setAula(Aula aula) {
 		this.aula = aula;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }
