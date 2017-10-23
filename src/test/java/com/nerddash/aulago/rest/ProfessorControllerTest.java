@@ -72,6 +72,7 @@ public class ProfessorControllerTest {
 		when(dao.delete(professor)).thenReturn(true);
 		when(dao.get(anyLong())).thenReturn(professor);
 		assertTrue(professorController.delete(professor));
+		verify(dao, times(1)).get(anyLong());
 		verify(dao, times(1)).delete(professor);
 
 	}

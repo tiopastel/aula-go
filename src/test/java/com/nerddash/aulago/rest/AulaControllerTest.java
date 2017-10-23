@@ -72,6 +72,7 @@ public class AulaControllerTest {
 		when(dao.delete(aula)).thenReturn(true);
 		when(dao.get(anyLong())).thenReturn(aula);
 		assertTrue(aulaController.delete(aula));
+		verify(dao, times(1)).get(anyLong());
 		verify(dao, times(1)).delete(aula);
 
 	}

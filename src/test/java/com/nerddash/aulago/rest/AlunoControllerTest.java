@@ -74,6 +74,7 @@ public class AlunoControllerTest {
 		when(dao.delete(aluno)).thenReturn(true);
 		when(dao.get(anyLong())).thenReturn(aluno);
 		assertTrue(alunoController.delete(aluno));
+		verify(dao, times(1)).get(anyLong());
 		verify(dao, times(1)).delete(aluno);
 
 	}

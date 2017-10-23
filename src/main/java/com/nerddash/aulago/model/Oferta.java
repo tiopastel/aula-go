@@ -2,6 +2,7 @@ package com.nerddash.aulago.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,6 +46,10 @@ public class Oferta extends AbstractEntityClass {
 
 	@Min(value = 0)
 	private BigDecimal preco;
+	
+	private LocalTime horaInicio;
+	
+	private LocalTime horaTermino;
 
 	public Professor getProfessor() {
 		return professor;
@@ -63,7 +68,10 @@ public class Oferta extends AbstractEntityClass {
 	}
 
 	public void setDataFinal(LocalDate dataFinal) {
-		this.dataFinal = dataFinal;
+		if(dataFinal.isAfter(this.dataInicial)) {
+			this.dataFinal = dataFinal;
+		}
+		
 	}
 
 	public Aula getAula() {
@@ -88,6 +96,34 @@ public class Oferta extends AbstractEntityClass {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public LocalTime getHoraInicio() {
+		return horaInicio;
+	}
+
+	public void setHoraInicio(LocalTime horaInicio) {
+		this.horaInicio = horaInicio;
+	}
+
+	public LocalTime getHoraTermino() {
+		return horaTermino;
+	}
+
+	public void setHoraTermino(LocalTime horaTermino) {
+		this.horaTermino = horaTermino;
+	}
+
+	@Deprecated
+	public void setDataInicial(LocalDate dataInicial) {
+		
+	}
+
+	@Override
+	public String toString() {
+		return "Oferta [id=" + id + ", professor=" + professor + ", dataInicial=" + dataInicial + ", dataFinal="
+				+ dataFinal + ", aula=" + aula + ", preco=" + preco + ", horaInicio=" + horaInicio + ", horaTermino="
+				+ horaTermino + "]";
 	}
 
 }
