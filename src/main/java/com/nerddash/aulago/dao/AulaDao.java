@@ -14,13 +14,11 @@ import javax.persistence.criteria.Root;
 import com.nerddash.aulago.model.Aula;
 
 @RequestScoped
-public class AulaDao {
-
-	private EntityManager em;
+public class AulaDao extends AbstractDaoClass<Aula> {
 
 	@Inject
 	public AulaDao(EntityManager em) {
-		this.em = em;
+		super(em);
 
 	}
 
@@ -52,9 +50,9 @@ public class AulaDao {
 			return false;
 		}
 	}
-	
+
 	public List<Aula> listAll() {
-		
+
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery<Aula> query = criteriaBuilder.createQuery(Aula.class);
 
