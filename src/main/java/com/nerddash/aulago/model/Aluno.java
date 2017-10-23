@@ -7,6 +7,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 @Table(name = "ALUNOS")
 public class Aluno extends Pessoa {
@@ -16,7 +18,7 @@ public class Aluno extends Pessoa {
 	@NotNull
 	private Nivel nivel;
 
-	@NotNull
+	@NotNull @NotEmpty
 	private String curso;
 
 	@OneToMany

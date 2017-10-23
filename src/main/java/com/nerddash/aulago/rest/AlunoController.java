@@ -41,18 +41,13 @@ public class AlunoController {
 	@Consumes("application/json")
 	@Post("/aluno")
 	public Aluno insere(Aluno aluno) {
-		
 
-		try {
-			validator.validate(aluno);			
-			aluno = dao.insert(aluno);
-			result.use(json()).from(aluno).serialize();
-			return aluno;
-		} catch (Exception e) {
-			validator.onErrorUse(json()).from(validator.getErrors(),  ERROR_TAG).serialize();
+		valida(aluno);
 
-		}
-		return null;
+		aluno = dao.insert(aluno);
+		result.use(json()).from(aluno).serialize();
+		return aluno;
+
 	}
 
 	@Get("/aluno/{aluno.id}")
@@ -61,36 +56,43 @@ public class AlunoController {
 		try {
 			aluno = dao.get(aluno.getId());
 			result.use(json()).from(aluno).serialize();
-			return aluno;
 		} catch (Exception e) {
-			System.out.println(e);
-			result.use(json()).from(e, ERROR_TAG).serialize();
+			result.use(json()).from(e.getCause(), ERROR_TAG).serialize();
 		}
-		return null;
+		return aluno;
 
 	}
 
 	@Delete("/aluno/{aluno.id}")
 	public boolean delete(Aluno aluno) {
+
+		aluno = dao.get(aluno.getId());
+
+		valida(aluno);
+
 		try {
-			dao.delete(aluno);
-			return true;
+			result.use(json()).from(aluno).serialize();
+			return dao.delete(aluno);
 
 		} catch (Exception e) {
-			result.use(json()).from(e, ERROR_TAG).serialize();
+			result.use(json()).from(e.getCause(), ERROR_TAG).serialize();
 		}
 		return false;
 
 	}
-
+	
+	@Consumes("application/json")
 	@Put("/aluno")
 	public Aluno atualiza(Aluno aluno) {
+		
+		valida(aluno);
+
 		try {
 			aluno = dao.update(aluno);
 			result.use(json()).from(aluno).serialize();
 			return aluno;
 		} catch (Exception e) {
-			result.use(json()).from(e, ERROR_TAG).serialize();
+			result.use(json()).from(e.getCause(), ERROR_TAG).serialize();
 		}
 
 		return null;
@@ -100,14 +102,17 @@ public class AlunoController {
 	@Get("/aluno/resetTabela")
 	public boolean resetTable() {
 		try {
-
 			dao.resetTable(Aluno.class);
 			return true;
 
 		} catch (Exception e) {
-			result.use(json()).from(e, ERROR_TAG).serialize();
+			result.use(json()).from(e.getCause(), ERROR_TAG).serialize();
 		}
 		return false;
 	}
 
+	private void valida(Aluno aluno) {
+		validator.validate(aluno);
+		validator.onErrorUse(json()).from(validator.getErrors(), ERROR_TAG).serialize();
+	}
 }

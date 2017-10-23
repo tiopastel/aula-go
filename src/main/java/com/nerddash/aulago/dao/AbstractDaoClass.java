@@ -22,14 +22,12 @@ public abstract class AbstractDaoClass<E extends AbstractEntityClass> {
 		this.em = em;
 	}
 
-	public E insert(E entity) throws Exception {
-		try {
+	public E insert(E entity) {
+	
 			this.em.persist(entity);
 			em.refresh(entity);
 			return entity;
-		} catch (Exception e) {
-			throw e;
-		}
+	
 
 	}
 

@@ -11,13 +11,12 @@ import com.nerddash.aulago.model.Aluno;
 import com.nerddash.aulago.model.Nivel;
 
 import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
 
 public class AlunoAPITest extends AbstractRestApiTest {
 
 	private Aluno aluno;
 	private Aluno resposta;
-
+	private JsonPath retorno;
 
 	@Before
 	public void setUp() throws Exception {
@@ -27,11 +26,13 @@ public class AlunoAPITest extends AbstractRestApiTest {
 		aluno.setNivel(Nivel.SUPERIOR);
 		aluno.setSenha("100xxx");
 		aluno.setEmail("flavio@email.com");
-		aluno.setCurso("ADS");	
-		
-		given().header("Accept", "application/json").contentType("application/json").body(aluno).expect()
+		aluno.setCurso("ADS");
+
+		retorno = given().header("Accept", "application/json").contentType("application/json").body(aluno).expect()
 				.statusCode(200).when().post("/aluno").andReturn().jsonPath();
-		
+
+		aluno = retorno.getObject("aluno", Aluno.class);
+
 	}
 
 	@After
@@ -42,8 +43,7 @@ public class AlunoAPITest extends AbstractRestApiTest {
 	@Test
 	public void get() {
 
-		JsonPath retorno = given().header("Accept", "application/json").contentType("application/json").expect()
-				.statusCode(200)
+		retorno = given().header("Accept", "application/json").contentType("application/json").expect().statusCode(200)
 
 				.when().get("/aluno/1").andReturn().jsonPath();
 
@@ -65,11 +65,14 @@ public class AlunoAPITest extends AbstractRestApiTest {
 		aluno.setEmail("vitao@email.com");
 		aluno.setCurso("ADS");
 
-		JsonPath retorno = given().header("Accept", "application/json").contentType("application/json").body(aluno)
-				.expect().statusCode(200).when().post("/aluno").andReturn().jsonPath();
+		retorno = given().header("Accept", "application/json").contentType("application/json").body(aluno).expect()
+				.statusCode(200).when().post("/aluno").andReturn().jsonPath();
 
 		resposta = retorno.getObject("aluno", Aluno.class);
 
+		Long expectedId = (long) 2;
+
+		assertEquals(expectedId, resposta.getId());
 		assertEquals("Victor Gomes", resposta.getNome());
 		assertEquals(Nivel.SUPERIOR, resposta.getNivel());
 		assertEquals("vitao@email.com", resposta.getEmail());
@@ -79,15 +82,37 @@ public class AlunoAPITest extends AbstractRestApiTest {
 	@Test
 	public void delete() {
 
-		Response retorno = given()
-				.expect()
-				.statusCode(200)
+		retorno = given().header("Accept", "application/json").contentType("application/json").expect().statusCode(200)
 
-				.when().get("/aluno/1");
-		
-		System.out.println(retorno);
+				.when().delete("/aluno/1").andReturn().jsonPath();
 
-		
+		resposta = retorno.getObject("aluno", Aluno.class);
+
+		assertEquals("Flávio Arantes", resposta.getNome());
+		assertEquals(Nivel.SUPERIOR, resposta.getNivel());
+		assertEquals("flavio@email.com", resposta.getEmail());
+
+	}
+
+	@Test
+	public void update() {
+
+		aluno.setNome("Victor Gomes");
+		aluno.setNivel(Nivel.SUPERIOR);
+		aluno.setEmail("vitao@email.com");
+		aluno.setCurso("ADS");
+
+		retorno = given().header("Accept", "application/json").contentType("application/json").body(aluno).expect()
+				.statusCode(200).when().put("/aluno").andReturn().jsonPath();
+
+		resposta = retorno.getObject("aluno", Aluno.class);
+
+		Long expectedId = (long) 1;
+
+		assertEquals(expectedId, resposta.getId());
+		assertEquals("Victor Gomes", resposta.getNome());
+		assertEquals(Nivel.SUPERIOR, resposta.getNivel());
+		assertEquals("vitao@email.com", resposta.getEmail());
 
 	}
 }

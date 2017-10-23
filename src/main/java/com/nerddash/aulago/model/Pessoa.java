@@ -20,7 +20,7 @@ public abstract class Pessoa extends AbstractEntityClass {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
 
-	@NotEmpty
+	@NotNull @NotEmpty 
 	protected String nome;
 
 	@NotNull

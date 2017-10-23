@@ -8,9 +8,8 @@ import javax.persistence.EntityManager;
 import com.nerddash.aulago.model.Aluno;
 import com.nerddash.aulago.security.CryptProducer;
 
-
 public class AlunoDao extends AbstractDaoClass<Aluno> {
-	
+
 	private static final CryptProducer cryptProducer = new CryptProducer();
 
 	@Inject
@@ -23,14 +22,11 @@ public class AlunoDao extends AbstractDaoClass<Aluno> {
 	public AlunoDao() {
 		this(null);
 	}
-	
-	public Aluno insert(Aluno aluno) throws Exception {
+
+	public Aluno insert(Aluno aluno) {
 		aluno.setSenha(cryptProducer.encryptPassword(aluno.getSenha()));
-		try {
-			return super.insert(aluno);
-		} catch (Exception e) {
-			throw e;
-		}
+		return super.insert(aluno);
+
 	}
 
 	public Aluno get(Long id) {
@@ -41,7 +37,7 @@ public class AlunoDao extends AbstractDaoClass<Aluno> {
 		return super.update(aluno);
 	}
 
-	public boolean delete(Aluno aluno) {		
+	public boolean delete(Aluno aluno) {
 		return super.delete(aluno);
 	}
 
