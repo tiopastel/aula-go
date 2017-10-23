@@ -27,10 +27,11 @@ public class AlunoAPITest extends AbstractRestApiTest {
 		aluno.setNivel(Nivel.SUPERIOR);
 		aluno.setSenha("100xxx");
 		aluno.setEmail("flavio@email.com");
-		aluno.setCurso("ADS");
-
+		aluno.setCurso("ADS");	
+		
 		given().header("Accept", "application/json").contentType("application/json").body(aluno).expect()
 				.statusCode(200).when().post("/aluno").andReturn().jsonPath();
+		
 	}
 
 	@After

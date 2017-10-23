@@ -5,33 +5,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.nerddash.aulago.security.CryptProducer;
-
 @MappedSuperclass
-public abstract class Pessoa extends AbstractEntityClass{
+public abstract class Pessoa extends AbstractEntityClass {
 
 	private static final long serialVersionUID = -3987080606101062491L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
-
-	@Transient
-	private static final CryptProducer cryptProducer = new CryptProducer();
 
 	@NotEmpty
 	protected String nome;
 
 	@NotNull
 	@Email
-	@Column(unique=true)
+	@Column(unique = true)
 	protected String email;
 
 	@Length(min = 6)
@@ -58,11 +52,7 @@ public abstract class Pessoa extends AbstractEntityClass{
 	}
 
 	public void setSenha(String senha) {
-		if (senha.length() > 5) {
-			this.senha = cryptProducer.encryptPassword(senha);
-		} else {
-			this.senha = senha;
-		}
+		this.senha = senha;
 	}
 
 	public Long getId() {

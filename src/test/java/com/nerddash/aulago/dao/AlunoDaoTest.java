@@ -42,7 +42,7 @@ public class AlunoDaoTest extends AbstractRepositoryTest {
 	}
 
 	@Test
-	public final void deveInserirListarTodosAlunosDepoisRemover2Alunos() {
+	public final void deveInserirListarTodosAlunosDepoisRemover2Alunos() throws Exception {
 
 		for (int j = 0; j < alunos.size(); j++) {
 			dao.insert(alunos.get(j));
@@ -58,7 +58,7 @@ public class AlunoDaoTest extends AbstractRepositoryTest {
 	}
 	
 	@Test
-	public final void deveInserirListarTodosAlunosDepoisRemover2AlunosDeNovo() {
+	public final void deveInserirListarTodosAlunosDepoisRemover2AlunosDeNovo() throws Exception {
 
 		for (int j = 0; j < alunos.size(); j++) {
 			dao.insert(alunos.get(j));

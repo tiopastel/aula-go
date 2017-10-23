@@ -19,6 +19,7 @@ import com.nerddash.aulago.model.Aluno;
 import com.nerddash.aulago.model.Nivel;
 
 import br.com.caelum.vraptor.util.test.MockResult;
+import br.com.caelum.vraptor.util.test.MockValidator;
 
 public class AlunoControllerTest {
 	
@@ -28,6 +29,7 @@ public class AlunoControllerTest {
 	
 	private AlunoDao dao;
 	private MockResult result;
+	private MockValidator validator;
 	private Aluno aluno;
 	private AlunoController alunoController;
 
@@ -35,10 +37,12 @@ public class AlunoControllerTest {
 	@Before
 	public void setUp() throws Exception {		
 		
-		result = new MockResult();		
+		result = new MockResult();	
+		validator = new MockValidator();
 		dao = mock(AlunoDao.class);	
 		
-		alunoController = new AlunoController(result, dao);		
+		
+		alunoController = new AlunoController(validator, result, dao);		
 
 		
 		for (int i = 0; i < 10; i++) {
@@ -56,7 +60,7 @@ public class AlunoControllerTest {
 	
 	
 	@Test
-	public void deveInserirUmAluno() {
+	public void deveInserirUmAluno() throws Exception {
 		
 		when(dao.insert(aluno)).thenReturn(aluno);		
 		assertEquals(aluno, alunoController.insere(aluno));

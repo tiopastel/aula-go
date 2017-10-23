@@ -2,6 +2,7 @@ package com.nerddash.aulago.dao;
 
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.Table;
 import javax.persistence.TypedQuery;
@@ -12,42 +13,41 @@ import javax.persistence.criteria.Root;
 
 import com.nerddash.aulago.model.AbstractEntityClass;
 
-
-
+@RequestScoped
 public abstract class AbstractDaoClass<E extends AbstractEntityClass> {
 
-	protected final EntityManager em;	
+	protected final EntityManager em;
 
 	public AbstractDaoClass(EntityManager em) {
 		this.em = em;
 	}
-	
-	
-	public E insert(E entity) {
 
-		this.em.persist(entity);
-		em.refresh(entity);
-		return entity;
+	public E insert(E entity) throws Exception {
+		try {
+			this.em.persist(entity);
+			em.refresh(entity);
+			return entity;
+		} catch (Exception e) {
+			throw e;
+		}
 
 	}
 
-	@SuppressWarnings("unchecked")
-	public E get(Long id) {
-		return (E) this.em.find(AbstractEntityClass.class, id);
+	public E get(Class<E> entityClass, Long id) {
+		return (E) this.em.find(entityClass, id);
 	}
 
 	public E update(E entity) {
 		return this.em.merge(entity);
 	}
 
-	public boolean delete(E entity) {	
-			this.em.remove(entity);
-			return true;
+	public boolean delete(E entity) {
+		this.em.remove(entity);
+		return true;
 	}
 
+	public List<E> listAll(Class<E> entityClass) {
 
-	public  List<E> listAll(Class<E> entityClass){
-		
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery<E> query = criteriaBuilder.createQuery(entityClass);
 
@@ -63,16 +63,13 @@ public abstract class AbstractDaoClass<E extends AbstractEntityClass> {
 		return typedQuery.getResultList();
 	}
 
-
-
 	public void resetTable(Class<E> entity) {
-		
+
 		String tableName = entity.getAnnotation(Table.class).name();
 
-		em.createNativeQuery("DELETE FROM "+ tableName + " WHERE id > 0").executeUpdate();
-		
-		em.createNativeQuery("ALTER TABLE "+ tableName + " ALTER COLUMN id RESTART WITH 1").executeUpdate();
+		em.createNativeQuery("DELETE FROM " + tableName + " WHERE id > 0").executeUpdate();
 
+		em.createNativeQuery("ALTER TABLE " + tableName + " ALTER COLUMN id RESTART WITH 1").executeUpdate();
 
 	}
 }

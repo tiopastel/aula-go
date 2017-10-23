@@ -14,40 +14,45 @@ import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.Validator;
 
 @Controller
 public class AlunoController {
 
 	private final Result result;
-	private AlunoDao dao;
+	private final AlunoDao dao;
 	private final String ERROR_TAG = "API-Error";
+	private final Validator validator;
 
 	/**
 	 * @deprecated CDI eyes only
 	 */
 	protected AlunoController() {
-		this(null, null);
+		this(null, null, null);
 	}
 
 	@Inject
-	public AlunoController(Result result, AlunoDao dao) {
+	public AlunoController(Validator validator, Result result, AlunoDao dao) {
+		this.validator = validator;
 		this.result = result;
 		this.dao = dao;
 	}
-	
+
 	@Consumes("application/json")
 	@Post("/aluno")
 	public Aluno insere(Aluno aluno) {
+		
 
 		try {
+			validator.validate(aluno);			
 			aluno = dao.insert(aluno);
 			result.use(json()).from(aluno).serialize();
 			return aluno;
 		} catch (Exception e) {
-			result.use(json()).from(e, ERROR_TAG).serialize();
+			validator.onErrorUse(json()).from(validator.getErrors(),  ERROR_TAG).serialize();
+
 		}
 		return null;
-
 	}
 
 	@Get("/aluno/{aluno.id}")
@@ -58,9 +63,9 @@ public class AlunoController {
 			result.use(json()).from(aluno).serialize();
 			return aluno;
 		} catch (Exception e) {
+			System.out.println(e);
 			result.use(json()).from(e, ERROR_TAG).serialize();
 		}
-
 		return null;
 
 	}
@@ -91,11 +96,11 @@ public class AlunoController {
 		return null;
 
 	}
-	
+
 	@Get("/aluno/resetTabela")
 	public boolean resetTable() {
 		try {
-			
+
 			dao.resetTable(Aluno.class);
 			return true;
 
