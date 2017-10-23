@@ -1,8 +1,8 @@
 package com.nerddash.aulago.model;
 
 import java.io.Serializable;
-import java.time.Duration;
 import java.time.LocalTime;
+
 
 public class Horario implements Serializable{
 
@@ -13,12 +13,11 @@ public class Horario implements Serializable{
 	
 	private LocalTime horaInicio;
 	private LocalTime horaEncerra;
-	private Duration duracao;
+	
 
 	public Horario(LocalTime horaInicio, LocalTime horaEncerra) {
 		this.horaEncerra = horaEncerra;
 		this.horaInicio = horaInicio;
-		this.duracao = Duration.between(horaInicio, horaEncerra);
 	}
 	
 	public LocalTime getHoraInicio() {
@@ -37,12 +36,5 @@ public class Horario implements Serializable{
 		this.horaEncerra = horaEncerra;
 	}
 
-	public Duration getDuracao() {
-		return this.duracao;
-	}
-
-	@Deprecated
-	public void setDuracao(Duration duracao) {
-	}
 
 }

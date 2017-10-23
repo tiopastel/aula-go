@@ -17,11 +17,12 @@ public class AlunoDaoTest extends AbstractRepositoryTest {
 
 	private List<Aluno> alunos;
 	private AlunoDao dao;
+	private Aluno aluno;
 
 	@Before
 	public void setUp() throws Exception {
 
-		this.entityClass = Aluno.class;
+		this.entityObject = new Aluno();
 
 		dao = new AlunoDao(em);
 
@@ -29,7 +30,7 @@ public class AlunoDaoTest extends AbstractRepositoryTest {
 
 		for (int i = 0; i < 10; i++) {
 
-			Aluno aluno = new Aluno();
+			aluno = new Aluno();
 			aluno.setNome("Flávio Arantes");
 			aluno.setNivel(Nivel.SUPERIOR);
 			aluno.setSenha("100xxx");
@@ -41,7 +42,7 @@ public class AlunoDaoTest extends AbstractRepositoryTest {
 	}
 
 	@Test
-	public final void deveInserirListarTodosAlunosDepoisRemover2Alunos() {
+	public final void deveInserirListarTodosAlunosDepoisRemover2Alunos() throws Exception {
 
 		for (int j = 0; j < alunos.size(); j++) {
 			dao.insert(alunos.get(j));
@@ -57,7 +58,7 @@ public class AlunoDaoTest extends AbstractRepositoryTest {
 	}
 	
 	@Test
-	public final void deveInserirListarTodosAlunosDepoisRemover2AlunosDeNovo() {
+	public final void deveInserirListarTodosAlunosDepoisRemover2AlunosDeNovo() throws Exception {
 
 		for (int j = 0; j < alunos.size(); j++) {
 			dao.insert(alunos.get(j));
@@ -71,5 +72,6 @@ public class AlunoDaoTest extends AbstractRepositoryTest {
 		assertThat("Houve algum problema ao excluir as tuplas", dao.listAll().size(), equalTo(8));
 
 	}
+	
 
 }

@@ -1,6 +1,5 @@
 package com.nerddash.aulago.model;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,16 +7,18 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 @Table(name = "ALUNOS")
-public class Aluno extends Pessoa implements Serializable {
+public class Aluno extends Pessoa {
 
 	private static final long serialVersionUID = -6213319960236426293L;
 
 	@NotNull
 	private Nivel nivel;
 
-	@NotNull
+	@NotNull @NotEmpty
 	private String curso;
 
 	@OneToMany
@@ -55,6 +56,12 @@ public class Aluno extends Pessoa implements Serializable {
 
 	public void setAulasContradas(int aulasContradas) {
 		this.aulasContradas = aulasContradas;
+	}
+
+	@Override
+	public String toString() {
+		return "Aluno [nivel=" + nivel + ", curso=" + curso + ", buscas=" + buscas + ", aulasContradas="
+				+ aulasContradas + ", id=" + id + ", nome=" + nome + ", email=" + email + "]";
 	}
 
 }

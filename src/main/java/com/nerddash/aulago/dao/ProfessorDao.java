@@ -4,20 +4,17 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Root;
 
 import com.nerddash.aulago.model.Professor;
+import com.nerddash.aulago.security.CryptProducer;
 
-public class ProfessorDao {
-	private final EntityManager em;
+public class ProfessorDao extends AbstractDaoClass<Professor> {
+
+	private static final CryptProducer cryptProducer = new CryptProducer();
 
 	@Inject
 	public ProfessorDao(EntityManager em) {
-		this.em = em;
+		super(em);
 	}
 
 	// CDI only use
@@ -28,47 +25,28 @@ public class ProfessorDao {
 
 	public Professor insert(Professor professor) {
 
-		this.em.persist(professor);
-		em.refresh(professor);
-		return professor;
+		professor.setSenha(cryptProducer.encryptPassword(professor.getSenha()));
+		return super.insert(professor);
 
 	}
 
 	public Professor get(Long id) {
 
-		return this.em.find(Professor.class, id);
+		return super.get(Professor.class, id);
 	}
 
 	public Professor update(Professor professor) {
-		
-			return this.em.merge(professor);
+
+		return super.update(professor);
 	}
 
 	public boolean delete(Professor professor) {
-		try {
-			this.em.remove(professor);
-			return true;
-
-		} catch (Exception e) {
-			return false;
-		}
+		return super.delete(professor);
 	}
 
 	public List<Professor> listAll() {
-		
-		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-		CriteriaQuery<Professor> query = criteriaBuilder.createQuery(Professor.class);
 
-		Root<Professor> root = query.from(Professor.class);
-		Order[] orderBy = { criteriaBuilder.asc(root.get("nome")) };
-
-		query.select(root);
-
-		query.orderBy(orderBy);
-
-		TypedQuery<Professor> typedQuery = em.createQuery(query);
-
-		return typedQuery.getResultList();
+		return super.listAll(Professor.class);
 	}
 
 }

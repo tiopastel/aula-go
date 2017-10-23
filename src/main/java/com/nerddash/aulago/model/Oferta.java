@@ -1,6 +1,5 @@
 package com.nerddash.aulago.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -19,13 +18,13 @@ import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "OFERTAS")
-public class Oferta implements Serializable {
+public class Oferta extends AbstractEntityClass {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7458430838857808802L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -85,6 +84,10 @@ public class Oferta implements Serializable {
 
 	public void setPreco(double preco) {
 		this.preco = BigDecimal.valueOf(preco);
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

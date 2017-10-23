@@ -3,7 +3,6 @@ package com.nerddash.aulago.dao;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.nerddash.aulago.model.Aula;
-import com.nerddash.aulago.model.Horario;
 import com.nerddash.aulago.model.Nivel;
 import com.nerddash.aulago.repository.AbstractRepositoryTest;
 
@@ -19,19 +17,19 @@ public class AulaDaoTest extends AbstractRepositoryTest {
 	
 	private List<Aula> aulas;
 	private AulaDao dao;
+	private Aula aula;
 
 	@Before
 	public void setUp() throws Exception {
 
-		this.entityClass = Aula.class;
+		this.entityObject = new Aula();
 		
 		dao = new AulaDao(em);
 		
 		aulas = new ArrayList<Aula>();
 		
 		for (int i = 0; i < 10; i++) {
-			Aula aula = new Aula();
-			aula.setHorario(new Horario(LocalTime.now(), LocalTime.MIDNIGHT));
+			aula = new Aula();
 			aula.setMateria("Matemática Discreta");
 			aula.setNivel(Nivel.SUPERIOR);
 			aulas.add(aula);

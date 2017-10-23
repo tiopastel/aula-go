@@ -4,7 +4,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.nerddash.aulago.model.Aula;
-import com.nerddash.aulago.model.Horario;
 import com.nerddash.aulago.model.Nivel;
 import com.nerddash.aulago.model.Oferta;
 import com.nerddash.aulago.model.Professor;
@@ -30,7 +28,7 @@ public class OfertaDaoTest extends AbstractRepositoryTest{
 
 	@Before
 	public void setUp() throws Exception {
-		this.entityClass = Oferta.class;
+		this.entityObject = new Oferta();
 		
 		dao = new OfertaDao(em);
 		daoProfessor = new ProfessorDao(em);
@@ -49,7 +47,6 @@ public class OfertaDaoTest extends AbstractRepositoryTest{
 		
 		aula = new Aula();
 		
-		aula.setHorario(new Horario(LocalTime.now(), LocalTime.MIDNIGHT));
 		aula.setMateria("Matemática Discreta");
 		aula.setNivel(Nivel.SUPERIOR);
 		
@@ -72,8 +69,8 @@ public class OfertaDaoTest extends AbstractRepositoryTest{
 	@After
 	public void tearDown() throws Exception {
 		super.tearDown();
-		resetTable(Professor.class);
-		resetTable(Aula.class);
+		resetTable(professor);
+		resetTable(aula);
 	}
 
 	@Test

@@ -1,21 +1,19 @@
 package com.nerddash.aulago.model;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
+import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "AULAS")
-public class Aula implements Serializable {
+public class Aula extends AbstractEntityClass {
 
 	private static final long serialVersionUID = 1135012763643617812L;
 
@@ -26,12 +24,9 @@ public class Aula implements Serializable {
 	@NotNull
 	private Nivel nivel;
 
+	@NotNull
 	@NotEmpty
 	private String materia;
-
-	private Horario horario;
-
-
 
 	public Nivel getNivel() {
 		return nivel;
@@ -49,17 +44,18 @@ public class Aula implements Serializable {
 		this.materia = materia;
 	}
 
-	public Horario getHorario() {
-		return horario;
-	}
-
-	public void setHorario(Horario horario) {
-		this.horario = horario;
-	}
-
-
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Aula [id=" + id + ", nivel=" + nivel + ", materia=" + materia + "]";
 	}
 
 }

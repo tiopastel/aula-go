@@ -20,7 +20,7 @@ public class ProfessorDaoTest extends AbstractRepositoryTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		this.entityClass= Professor.class;
+		this.entityObject= new Professor();
 
 		dao = new ProfessorDao(em);
 

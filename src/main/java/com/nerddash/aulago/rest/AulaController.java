@@ -4,8 +4,8 @@ import static br.com.caelum.vraptor.view.Results.json;
 
 import javax.inject.Inject;
 
-import com.nerddash.aulago.dao.AlunoDao;
-import com.nerddash.aulago.model.Aluno;
+import com.nerddash.aulago.dao.AulaDao;
+import com.nerddash.aulago.model.Aula;
 
 import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Controller;
@@ -17,62 +17,62 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
 
 @Controller
-public class AlunoController {
+public class AulaController {
 
 	private final Result result;
-	private final AlunoDao dao;
+	private final AulaDao dao;
 	private final String ERROR_TAG = "API-Error";
 	private final Validator validator;
 
 	/**
 	 * @deprecated CDI eyes only
 	 */
-	protected AlunoController() {
+	protected AulaController() {
 		this(null, null, null);
 	}
 
 	@Inject
-	public AlunoController(Validator validator, Result result, AlunoDao dao) {
+	public AulaController(Validator validator, Result result, AulaDao dao) {
 		this.validator = validator;
 		this.result = result;
 		this.dao = dao;
 	}
 
 	@Consumes("application/json")
-	@Post("/aluno")
-	public Aluno insere(Aluno aluno) {
+	@Post("/aula")
+	public Aula insere(Aula aula) {
 
-		valida(aluno);
+		valida(aula);
 
-		aluno = dao.insert(aluno);
-		result.use(json()).from(aluno).serialize();
-		return aluno;
+		aula = dao.insert(aula);
+		result.use(json()).from(aula).serialize();
+		return aula;
 
 	}
 
-	@Get("/aluno/{aluno.id}")
-	public Aluno get(Aluno aluno) {
+	@Get("/aula/{aula.id}")
+	public Aula get(Aula aula) {
 
 		try {
-			aluno = dao.get(aluno.getId());
-			result.use(json()).from(aluno).serialize();
+			aula = dao.get(aula.getId());
+			result.use(json()).from(aula).serialize();
 		} catch (Exception e) {
 			result.use(json()).from(e.getCause(), ERROR_TAG).serialize();
 		}
-		return aluno;
+		return aula;
 
 	}
 
-	@Delete("/aluno/{aluno.id}")
-	public boolean delete(Aluno aluno) {
+	@Delete("/aula/{aula.id}")
+	public boolean delete(Aula aula) {
 
-		aluno = dao.get(aluno.getId());
+		aula = dao.get(aula.getId());
 
-		valida(aluno);
+		valida(aula);
 
 		try {
-			result.use(json()).from(aluno).serialize();
-			dao.delete(aluno);
+			result.use(json()).from(aula).serialize();
+			dao.delete(aula);
 			return true;
 
 		} catch (Exception e) {
@@ -83,15 +83,15 @@ public class AlunoController {
 	}
 	
 	@Consumes("application/json")
-	@Put("/aluno")
-	public Aluno atualiza(Aluno aluno) {
+	@Put("/aula")
+	public Aula atualiza(Aula aula) {
 		
-		valida(aluno);
+		valida(aula);
 
 		try {
-			aluno = dao.update(aluno);
-			result.use(json()).from(aluno).serialize();
-			return aluno;
+			aula = dao.update(aula);
+			result.use(json()).from(aula).serialize();
+			return aula;
 		} catch (Exception e) {
 			result.use(json()).from(e.getCause(), ERROR_TAG).serialize();
 		}
@@ -100,10 +100,10 @@ public class AlunoController {
 
 	}
 
-	@Get("/aluno/resetTabela")
+	@Get("/aula/resetTabela")
 	public boolean resetTable() {
 		try {
-			dao.resetTable(Aluno.class);
+			dao.resetTable(Aula.class);
 			return true;
 
 		} catch (Exception e) {
@@ -112,8 +112,8 @@ public class AlunoController {
 		return false;
 	}
 
-	private void valida(Aluno aluno) {
-		validator.validate(aluno);
+	private void valida(Aula aula) {
+		validator.validate(aula);
 		validator.onErrorUse(json()).from(validator.getErrors(), ERROR_TAG).serialize();
 	}
 }
