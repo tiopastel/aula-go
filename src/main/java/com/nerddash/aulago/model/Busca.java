@@ -58,11 +58,9 @@ public class Busca extends AbstractEntityClass {
 		return dataFinal;
 	}
 
-	public void setDataFinal(LocalDate dataFinal) throws Exception {
+	public void setDataFinal(LocalDate dataFinal) {
 		if (dataFinal.isAfter(LocalDate.now())) {
 			this.dataFinal = dataFinal;
-		} else {
-			throw new Exception("A data final deve ser uma data futura.");
 		}
 	}
 
@@ -80,6 +78,12 @@ public class Busca extends AbstractEntityClass {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Busca [id=" + id + ", aluno=" + aluno + ", dataInicial=" + dataInicial + ", dataFinal=" + dataFinal
+				+ ", aula=" + aula + "]";
 	}
 
 }

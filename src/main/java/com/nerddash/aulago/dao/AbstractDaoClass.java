@@ -21,6 +21,7 @@ public abstract class AbstractDaoClass<E extends AbstractEntityClass> {
 	public AbstractDaoClass(EntityManager em) {
 		this.em = em;
 	}
+	
 
 	public E insert(E entity) {
 	

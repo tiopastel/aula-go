@@ -17,35 +17,26 @@ public class ProfessorDao extends AbstractDaoClass<Professor> {
 		super(em);
 	}
 
-	// CDI only use
+	/*
+	 * CDI eyes only
+	 * 
+	 */
 	@Deprecated
 	public ProfessorDao() {
 		this(null);
 	}
 
-	public Professor insert(Professor professor) {
 
+	public Professor insert(Professor professor) {
 		professor.setSenha(cryptProducer.encryptPassword(professor.getSenha()));
 		return super.insert(professor);
-
 	}
 
 	public Professor get(Long id) {
-
 		return super.get(Professor.class, id);
 	}
 
-	public Professor update(Professor professor) {
-
-		return super.update(professor);
-	}
-
-	public boolean delete(Professor professor) {
-		return super.delete(professor);
-	}
-
 	public List<Professor> listAll() {
-
 		return super.listAll(Professor.class);
 	}
 

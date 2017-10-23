@@ -2,12 +2,14 @@ package com.nerddash.aulago.dao;
 
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import com.nerddash.aulago.model.Aluno;
 import com.nerddash.aulago.security.CryptProducer;
 
+@RequestScoped
 public class AlunoDao extends AbstractDaoClass<Aluno> {
 
 	private static final CryptProducer cryptProducer = new CryptProducer();
@@ -16,30 +18,27 @@ public class AlunoDao extends AbstractDaoClass<Aluno> {
 	public AlunoDao(EntityManager em) {
 		super(em);
 	}
-
-	// CDI only use
+	
+	/*
+	 * CDI eyes only
+	 * 
+	 */
 	@Deprecated
 	public AlunoDao() {
 		this(null);
 	}
+
 
 	public Aluno insert(Aluno aluno) {
 		aluno.setSenha(cryptProducer.encryptPassword(aluno.getSenha()));
 		return super.insert(aluno);
 
 	}
-
+	
 	public Aluno get(Long id) {
 		return super.get(Aluno.class, id);
 	}
 
-	public Aluno update(Aluno aluno) {
-		return super.update(aluno);
-	}
-
-	public boolean delete(Aluno aluno) {
-		return super.delete(aluno);
-	}
 
 	public List<Aluno> listAll() {
 		return super.listAll(Aluno.class);

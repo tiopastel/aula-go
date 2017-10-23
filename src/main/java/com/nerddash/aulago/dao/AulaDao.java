@@ -16,26 +16,18 @@ public class AulaDao extends AbstractDaoClass<Aula> {
 		super(em);
 
 	}
-
+	/*
+	 * CDI eyes only
+	 * 
+	 */
 	@Deprecated
 	public AulaDao() {
 		this(null);
 	}
 
-	public Aula insert(Aula aula) {
-		return super.insert(aula);
-	}
 
 	public Aula get(Long id) {
 		return super.get(Aula.class, id);
-	}
-
-	public Aula update(Aula aula) {
-		return super.update(aula);
-	}
-
-	public boolean delete(Aula aula) {
-		return super.delete(aula);
 	}
 
 	public List<Aula> listAll() {
