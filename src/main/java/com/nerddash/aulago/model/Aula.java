@@ -1,5 +1,7 @@
 package com.nerddash.aulago.model;
 
+import java.time.LocalTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,23 +13,20 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "AULAS")
-public class Aula  extends AbstractEntityClass{
+public class Aula extends AbstractEntityClass {
 
 	private static final long serialVersionUID = 1135012763643617812L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
 
 	@NotNull
 	private Nivel nivel;
 
+	@NotNull
 	@NotEmpty
 	private String materia;
-
-	private Horario horario;
-
-
 
 	public Nivel getNivel() {
 		return nivel;
@@ -45,21 +44,18 @@ public class Aula  extends AbstractEntityClass{
 		this.materia = materia;
 	}
 
-	public Horario getHorario() {
-		return horario;
-	}
-
-	public void setHorario(Horario horario) {
-		this.horario = horario;
-	}
-
-
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Aula [id=" + id + ", nivel=" + nivel + ", materia=" + materia + "]";
 	}
 
 }

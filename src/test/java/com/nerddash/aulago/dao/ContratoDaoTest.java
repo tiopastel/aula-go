@@ -4,7 +4,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 import org.junit.After;
@@ -14,7 +13,6 @@ import org.junit.Test;
 import com.nerddash.aulago.model.Aluno;
 import com.nerddash.aulago.model.Aula;
 import com.nerddash.aulago.model.Contrato;
-import com.nerddash.aulago.model.Horario;
 import com.nerddash.aulago.model.Nivel;
 import com.nerddash.aulago.model.Oferta;
 import com.nerddash.aulago.model.Professor;
@@ -58,7 +56,6 @@ public class ContratoDaoTest extends AbstractRepositoryTest{
 		
 		aula = new Aula();
 		
-		aula.setHorario(new Horario(LocalTime.now(), LocalTime.MIDNIGHT));
 		aula.setMateria("Matemática Discreta");
 		aula.setNivel(Nivel.SUPERIOR);
 

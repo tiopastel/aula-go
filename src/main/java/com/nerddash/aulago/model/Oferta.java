@@ -27,7 +27,7 @@ public class Oferta extends AbstractEntityClass {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
 
 	@OneToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)

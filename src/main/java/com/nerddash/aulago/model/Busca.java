@@ -25,7 +25,7 @@ public class Busca extends AbstractEntityClass {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
 
 	@NotNull
 	@OneToOne

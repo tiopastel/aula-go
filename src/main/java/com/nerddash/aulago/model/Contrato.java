@@ -20,7 +20,7 @@ public class Contrato  extends AbstractEntityClass{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
 	
 	@NotNull
 	@ManyToOne
