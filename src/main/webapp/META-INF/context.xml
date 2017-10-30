@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context path="/aulago">
+	<Resource name="jdbc/aulago" auth="Container"
+		factory="com.zaxxer.hikari.HikariJNDIFactory" type="javax.sql.DataSource"
+		minimumIdle="5" maximumPoolSize="10" connectionTimeout="300000"
+		dataSourceClassName="com.mysql.jdbc.jdbc2.optional.MysqlDataSource"
+		dataSource.serverName="mariadb" dataSource.port="3306"
+		dataSource.databaseName="db_aulago" dataSource.user="mariadb"
+		dataSource.password="100%xpt0" />
+
+</Context>
