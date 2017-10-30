@@ -1,5 +1,7 @@
 ## AulaGo Server
 
+[![Build Status](https://travis-ci.org/JungerMarzPrototypeB/aula-go.svg?branch=master)](https://travis-ci.org/JungerMarzPrototypeB/aula-go)
+
 > Este repositório contém o *back-end* utilizado no projeto AulaGO, para o *front-end* siga esse [link](https://github.com/victornjg/AulaGoApp).
 
 #### Sobre o AulaGO
